@@ -4,11 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Practice Discovery — Cowork</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
-:root{--sage:#4a7c59;--sage-light:#e8f0eb;--sage-mid:#b8d4be;--sage-dark:#2d5a3d;--cream:#faf8f4;--ww:#ffffff;--ink:#1a1a18;--ink-mid:#4a4a46;--ink-light:#8a8a84;--ink-faint:#e8e6e0;--amber:#c4622d;--amber-light:#fdf0e8}
+:root{--sage:#4a7c59;--sage-light:#e8f0eb;--sage-mid:#b8d4be;--sage-dark:#2d5a3d;--cream:#faf8f4;--ww:#ffffff;--ink:#1a1a18;--ink-mid:#4a4a46;--ink-light:#8a8a84;--ink-faint:#e8e6e0}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;display:flex;flex-direction:column}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:56px;background:var(--ww);border-bottom:1px solid var(--ink-faint)}
@@ -33,7 +31,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 .ai-id{display:flex;align-items:center;gap:10px}
 .ai-av{width:36px;height:36px;border-radius:50%;background:var(--sage);display:flex;align-items:center;justify-content:center;position:relative}
 .ai-av svg{width:18px;height:18px;fill:none;stroke:white;stroke-width:1.8;stroke-linecap:round}
-.status-dot{position:absolute;bottom:0;right:0;width:9px;height:9px;border-radius:50%;background:#4ade80;border:2px solid var(--cream)}
+.sdot{position:absolute;bottom:0;right:0;width:9px;height:9px;border-radius:50%;background:#4ade80;border:2px solid var(--cream)}
 .ai-name{font-size:13px;font-weight:500;color:var(--ink)}
 .ai-role{font-size:11px;color:var(--ink-light);margin-top:1px}
 .prog-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
@@ -67,36 +65,32 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 .sbtn:active{transform:scale(.95)}
 .sbtn:disabled{background:var(--ink-faint);cursor:not-allowed}
 .sbtn svg{width:16px;height:16px;fill:none;stroke:white;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.spanel{display:none;animation:fu .3s ease}
+.spanel{display:none}
 .shd{padding:1rem 1.25rem;background:var(--sage-light);border-top:1px solid var(--sage-mid);display:flex;align-items:center;justify-content:space-between}
 .stitle{font-size:13px;font-weight:500;color:var(--sage-dark);display:flex;align-items:center;gap:7px}
 .stitle svg{width:15px;height:15px;fill:none;stroke:var(--sage-dark);stroke-width:1.8;stroke-linecap:round}
 .sacts{display:flex;gap:8px}
-.xbtn{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;padding:5px 12px;border-radius:20px;border:1px solid var(--sage-mid);background:transparent;color:var(--sage-dark);cursor:pointer;transition:background .15s}
-.xbtn:hover{background:rgba(74,124,89,.1)}
+.xbtn{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;padding:5px 12px;border-radius:20px;border:1px solid var(--sage-mid);background:transparent;color:var(--sage-dark);cursor:pointer}
 .xbtn.p{background:var(--sage);color:white;border-color:var(--sage)}
-.xbtn.p:hover{background:var(--sage-dark)}
-.sbody{padding:1.25rem;display:flex;flex-direction:column;gap:0}
+.sbody{padding:1.25rem}
 .sigb{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;margin-bottom:1rem}
 .sigb-dot{width:7px;height:7px;border-radius:50%}
 .hot{background:#ecfdf5;color:#065f46}.hot .sigb-dot{background:#10b981}
-.warm{background:var(--amber-light);color:#7c2d12}.warm .sigb-dot{background:var(--amber)}
+.warm{background:#fdf0e8;color:#7c2d12}.warm .sigb-dot{background:#c4622d}
 .cold{background:#fef2f2;color:#991b1b}.cold .sigb-dot{background:#ef4444}
 .irow{display:flex;gap:12px;padding:.6rem 0;border-bottom:1px solid var(--ink-faint);align-items:flex-start}
 .irow:last-child{border-bottom:none}
-.ikey{font-size:11px;font-weight:500;color:var(--ink-light);text-transform:uppercase;letter-spacing:.05em;width:130px;flex-shrink:0;padding-top:1px;line-height:1.4}
+.ikey{font-size:11px;font-weight:500;color:var(--ink-light);text-transform:uppercase;letter-spacing:.05em;width:130px;flex-shrink:0;padding-top:1px}
 .ival{font-size:13px;color:var(--ink);line-height:1.55;flex:1}
 .qval{font-family:'DM Serif Display',serif;font-size:14px;font-style:italic;color:var(--sage-dark);line-height:1.5}
 footer{text-align:center;padding:1.25rem;font-size:11px;color:var(--ink-light);border-top:1px solid var(--ink-faint)}
 footer a{color:var(--sage);text-decoration:none}
+@media(max-width:520px){.hero{padding:1.5rem 1rem 1.25rem}.topbar{padding:0 1rem}.main{padding:1rem .75rem}.hero-meta{gap:.75rem}}
 </style>
 </head>
 <body>
 <div class="topbar">
-  <a class="logo" href="#">
-    <div class="logo-mark"><svg viewBox="0 0 16 16"><path d="M8 2L14 6v8H2V6z"/><path d="M5 14V9h6v5"/></svg></div>
-    <span class="logo-name">Cowork</span>
-  </a>
+  <a class="logo" href="#"><div class="logo-mark"><svg viewBox="0 0 16 16"><path d="M8 2L14 6v8H2V6z"/><path d="M5 14V9h6v5"/></svg></div><span class="logo-name">Cowork</span></a>
   <span class="topbar-right">Practice research · Confidential</span>
 </div>
 <div class="hero">
@@ -113,10 +107,7 @@ footer a{color:var(--sage);text-decoration:none}
   <div class="card">
     <div class="chat-hd">
       <div class="ai-id">
-        <div class="ai-av">
-          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          <div class="status-dot"></div>
-        </div>
+        <div class="ai-av"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><div class="sdot"></div></div>
         <div><div class="ai-name">Practice researcher</div><div class="ai-role">Cowork discovery team</div></div>
       </div>
       <div class="prog-wrap">
@@ -127,159 +118,41 @@ footer a{color:var(--sage);text-decoration:none}
     <div class="messages" id="messages"></div>
     <div class="izone" id="izone">
       <textarea id="user-input" placeholder="Type your response..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
-      <button class="sbtn" id="sbtn" onclick="send()" disabled>
-        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-      </button>
+      <button class="sbtn" id="sbtn" onclick="send()" disabled><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
     </div>
     <div class="spanel" id="spanel"></div>
   </div>
 </div>
 <footer>Built by Cowork &mdash; <a href="mailto:team@prooftrust.app">team@prooftrust.app</a></footer>
 <script>
-const K='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';
-const SYS=`You are conducting a discovery interview on behalf of a company called Cowork researching whether dental practices have painful problems with lapsed patients and admin overhead to pay for an AI automation solution.
-
-Persona: warm, genuinely curious, professional but not corporate. NOT selling anything.
-
-Cover all 6 topics organically before ending:
-1. Practice basics — size, PMS software, years open
-2. Lapsed patient problem — how many, what they do about it, pain level
-3. Admin burden — which tasks eat most time, who handles them
-4. Current tools — what they pay for, what gaps remain
-5. Willingness to pay — who decides, budget sense, what they'd pay
-6. Open-ended — biggest headache, anything else
-
-Rules:
-- ONE question per message only
-- Messages 1-3 sentences max
-- Probe interesting or short answers before moving on
-- Never say "great question" or "that's interesting"
-- Don't reveal you're AI unless asked; if asked, be honest
-- Don't pitch anything
-
-When all 6 topics are genuinely covered, end with exactly:
+const PROXY='https://proof-backend-production.up.railway.app/api/proxy/claude';
+const SYS=`You are conducting a discovery interview for Cowork, researching whether dental practices have painful enough problems with lapsed patients and admin overhead to pay for an AI automation solution. Warm, curious, not salesy. Cover these 6 topics naturally before ending:
+1. Practice basics (size, PMS software, years open)
+2. Lapsed patient problem (how many, what they do, pain level)
+3. Admin burden (time-consuming tasks, who handles them)
+4. Current tools (what they pay for, gaps)
+5. Willingness to pay (who decides, budget)
+6. Open-ended (biggest headache)
+Rules: ONE question per message. Max 3 sentences. Probe short answers. Never say great question. Don't pitch. Don't reveal you're AI unless asked directly.
+When all 6 topics covered output exactly:
 INTERVIEW_COMPLETE
 {"practice_size":"","pms":"","years_open":"","lapsed_pain_score":"1-10","lapsed_count_estimate":"","current_reactivation_method":"","admin_hours_weekly":"","biggest_admin_pain":"","current_tools":"","willingness_to_pay":"","decision_maker":"","key_quote":"","overall_signal":"hot|warm|cold","signal_reasoning":"","notes":""}
-
-Fill every field. key_quote = most revealing thing verbatim. overall_signal = honest prospect rating.
 Start with a warm 2-3 sentence intro and first question.`;
 
 let H=[],busy=false,topics=0,sumData=null;
-
-function addMsg(role,text){
-  const m=document.getElementById('messages'),row=document.createElement('div');
-  row.className='mrow'+(role==='user'?' u':'');
-  const av=document.createElement('div');av.className='mav '+(role==='user'?'u':'ai');av.textContent=role==='user'?'You':'AI';
-  const b=document.createElement('div');b.className='bub '+(role==='user'?'u':'ai');b.textContent=text;
-  row.appendChild(av);row.appendChild(b);m.appendChild(row);m.scrollTop=m.scrollHeight;
-}
-function showT(){
-  const m=document.getElementById('messages'),r=document.createElement('div');
-  r.className='trow';r.id='typing';r.innerHTML='<div class="mav ai">AI</div><div class="tbub"><div class="td"></div><div class="td"></div><div class="td"></div></div>';
-  m.appendChild(r);m.scrollTop=m.scrollHeight;
-}
+function addMsg(role,text){const m=document.getElementById('messages'),row=document.createElement('div');row.className='mrow'+(role==='user'?' u':'');const av=document.createElement('div');av.className='mav '+(role==='user'?'u':'ai');av.textContent=role==='user'?'You':'AI';const b=document.createElement('div');b.className='bub '+(role==='user'?'u':'ai');b.textContent=text;row.appendChild(av);row.appendChild(b);m.appendChild(row);m.scrollTop=m.scrollHeight;}
+function showT(){const m=document.getElementById('messages'),r=document.createElement('div');r.className='trow';r.id='typing';r.innerHTML='<div class="mav ai">AI</div><div class="tbub"><div class="td"></div><div class="td"></div><div class="td"></div></div>';m.appendChild(r);m.scrollTop=m.scrollHeight;}
 function hideT(){const t=document.getElementById('typing');if(t)t.remove();}
-function setProg(pct,lbl){
-  const f=document.getElementById('prog-fill'),l=document.getElementById('prog-text');
-  if(f)f.style.width=Math.round(pct)+'%';if(l)l.textContent=lbl;
-}
+function setProg(pct,lbl){document.getElementById('prog-fill').style.width=Math.round(pct)+'%';document.getElementById('prog-text').textContent=lbl;}
 function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,120)+'px';}
 function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}
-function scoreT(t){
-  const s=t.toLowerCase();let n=0;
-  if(/dentrix|eaglesoft|open dental|curve|pms|software/.test(s))n++;
-  if(/lapsed|recall|reactivat|overdue|not seen/.test(s))n++;
-  if(/admin|hours|staff|front desk|billing|insurance/.test(s))n++;
-  if(/tool|weave|nexhealth|paying|subscription/.test(s))n++;
-  if(/pay|budget|price|cost|month|decision/.test(s))n++;
-  if(/headache|biggest|frustrat|wish|problem|challenge/.test(s))n++;
-  return n;
-}
-async function callC(msgs){
-  const r=await fetch('https://api.anthropic.com/v1/messages',{
-    method:'POST',
-    headers:{'Content-Type':'application/json','x-api-key':K,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1024,system:SYS,messages:msgs})
-  });
-  if(!r.ok)throw new Error('API '+r.status);
-  const d=await r.json();return d.content?.[0]?.text||'';
-}
-function showSum(raw){
-  const mi=raw.indexOf('INTERVIEW_COMPLETE');if(mi===-1)return false;
-  const js=raw.indexOf('{',mi),je=raw.lastIndexOf('}');if(js===-1||je===-1)return false;
-  try{sumData=JSON.parse(raw.substring(js,je+1));}catch(e){return false;}
-  document.getElementById('izone').style.display='none';
-  setProg(100,'Complete');
-  const sig=sumData.overall_signal||'warm';
-  const sc={hot:'hot',warm:'warm',cold:'cold'}[sig]||'warm';
-  const sl={hot:'Hot prospect',warm:'Warm prospect',cold:'Cold prospect'}[sig]||'Warm';
-  const fields=[
-    ['Practice size',sumData.practice_size],['PMS software',sumData.pms],['Years open',sumData.years_open],
-    ['Lapsed pain',sumData.lapsed_pain_score?sumData.lapsed_pain_score+' / 10':null],
-    ['Lapsed patients',sumData.lapsed_count_estimate],['Current recall',sumData.current_reactivation_method],
-    ['Admin hrs/week',sumData.admin_hours_weekly],['Biggest pain',sumData.biggest_admin_pain],
-    ['Tools',sumData.current_tools],['Willingness to pay',sumData.willingness_to_pay],
-    ['Decision maker',sumData.decision_maker],['Notes',sumData.notes],
-  ].filter(([,v])=>v&&v.trim()&&v!=='""');
-  let rows=fields.map(([k,v])=>`<div class="irow"><div class="ikey">${k}</div><div class="ival">${v}</div></div>`).join('');
-  if(sumData.key_quote&&sumData.key_quote.length>2)rows+=`<div class="irow"><div class="ikey">Key quote</div><div class="ival qval">"${sumData.key_quote}"</div></div>`;
-  if(sumData.signal_reasoning)rows+=`<div class="irow"><div class="ikey">Why</div><div class="ival">${sumData.signal_reasoning}</div></div>`;
-  const p=document.getElementById('spanel');p.style.display='block';
-  p.innerHTML=`<div class="shd"><div class="stitle"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Interview complete</div><div class="sacts"><button class="xbtn" onclick="copyR()">Copy results</button><button class="xbtn p" onclick="newI()">New interview</button></div></div><div class="sbody"><div class="sigb ${sc}"><div class="sigb-dot"></div>${sl}</div>${rows}</div>`;
-  return true;
-}
-function copyR(){
-  if(!sumData)return;
-  navigator.clipboard.writeText('=== COWORK DENTAL INTERVIEW ===\n\n'+Object.entries(sumData).map(([k,v])=>`${k}: ${v}`).join('\n')).catch(()=>{});
-  const b=document.querySelector('.xbtn');if(b){b.textContent='Copied!';setTimeout(()=>b.textContent='Copy results',2000);}
-}
-function newI(){
-  H=[];topics=0;sumData=null;
-  document.getElementById('messages').innerHTML='';
-  document.getElementById('spanel').style.display='none';
-  document.getElementById('izone').style.display='flex';
-  setProg(0,'Getting started');startI();
-}
-async function startI(){
-  busy=true;document.getElementById('sbtn').disabled=true;
-  showT();
-  try{
-    const o=await callC([{role:'user',content:'[Begin the interview]'}]);
-    hideT();H.push({role:'assistant',content:o});addMsg('assistant',o);
-    setProg(5,'Interview started');
-    document.getElementById('sbtn').disabled=false;
-    document.getElementById('user-input').focus();
-  }catch(e){
-    hideT();
-    const fb="Hi there! Thanks for taking a few minutes — I'm doing research on how dental practices handle patient recall and day-to-day admin. To start, could you tell me a bit about your practice? How many providers do you have and roughly how long have you been open?";
-    addMsg('assistant',fb);H.push({role:'assistant',content:fb});
-    document.getElementById('sbtn').disabled=false;
-  }
-  busy=false;
-}
-async function send(){
-  const inp=document.getElementById('user-input');
-  const txt=inp?.value.trim();if(!txt||busy)return;
-  inp.value='';inp.style.height='auto';
-  busy=true;document.getElementById('sbtn').disabled=true;
-  addMsg('user',txt);H.push({role:'user',content:txt});
-  topics=Math.min(6,topics+(scoreT(txt)>0?1:0));
-  const pct=Math.min(90,(topics/6)*90);
-  const lbls=['Getting started','Practice basics','Patient recall','Admin workflow','Tools & software','Willingness to pay','Wrapping up'];
-  setProg(pct,lbls[Math.min(topics,6)]);
-  showT();
-  try{
-    const rep=await callC(H);hideT();
-    if(!showSum(rep)){
-      const cl=rep.replace('INTERVIEW_COMPLETE','').trim();
-      addMsg('assistant',cl);H.push({role:'assistant',content:rep});
-      topics=Math.min(6,topics+(scoreT(cl)>0?1:0));
-      setProg(Math.min(90,(topics/6)*90),lbls[Math.min(topics,6)]);
-    }
-  }catch(e){hideT();addMsg('assistant',"Sorry, connection issue — could you repeat that?");}
-  busy=false;document.getElementById('sbtn').disabled=false;
-  document.getElementById('user-input')?.focus();
-}
+function scoreT(t){const s=t.toLowerCase();let n=0;if(/dentrix|eaglesoft|open dental|pms/.test(s))n++;if(/lapsed|recall|reactivat|overdue/.test(s))n++;if(/admin|hours|staff|front desk|billing/.test(s))n++;if(/tool|weave|nexhealth|paying/.test(s))n++;if(/pay|budget|price|decision/.test(s))n++;if(/headache|biggest|frustrat|problem/.test(s))n++;return n;}
+async function callC(msgs){const r=await fetch(PROXY,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1024,system:SYS,messages:msgs})});if(!r.ok)throw new Error('API '+r.status);const d=await r.json();return d.content?.[0]?.text||'';}
+function showSum(raw){const mi=raw.indexOf('INTERVIEW_COMPLETE');if(mi===-1)return false;const js=raw.indexOf('{',mi),je=raw.lastIndexOf('}');if(js===-1||je===-1)return false;try{sumData=JSON.parse(raw.substring(js,je+1));}catch(e){return false;}document.getElementById('izone').style.display='none';setProg(100,'Complete');const sig=sumData.overall_signal||'warm';const sc={hot:'hot',warm:'warm',cold:'cold'}[sig]||'warm';const sl={hot:'Hot prospect',warm:'Warm prospect',cold:'Cold prospect'}[sig]||'Warm';const fields=[['Practice size',sumData.practice_size],['PMS',sumData.pms],['Years open',sumData.years_open],['Lapsed pain',sumData.lapsed_pain_score?sumData.lapsed_pain_score+' / 10':null],['Lapsed patients',sumData.lapsed_count_estimate],['Recall method',sumData.current_reactivation_method],['Admin hrs/wk',sumData.admin_hours_weekly],['Biggest pain',sumData.biggest_admin_pain],['Tools',sumData.current_tools],['Willingness to pay',sumData.willingness_to_pay],['Decision maker',sumData.decision_maker],['Notes',sumData.notes]].filter(([,v])=>v&&v.trim()&&v!=='""');let rows=fields.map(([k,v])=>`<div class="irow"><div class="ikey">${k}</div><div class="ival">${v}</div></div>`).join('');if(sumData.key_quote&&sumData.key_quote.length>2)rows+=`<div class="irow"><div class="ikey">Key quote</div><div class="ival qval">"${sumData.key_quote}"</div></div>`;if(sumData.signal_reasoning)rows+=`<div class="irow"><div class="ikey">Why</div><div class="ival">${sumData.signal_reasoning}</div></div>`;const p=document.getElementById('spanel');p.style.display='block';p.innerHTML=`<div class="shd"><div class="stitle"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Interview complete</div><div class="sacts"><button class="xbtn" onclick="copyR()">Copy results</button><button class="xbtn p" onclick="newI()">New interview</button></div></div><div class="sbody"><div class="sigb ${sc}"><div class="sigb-dot"></div>${sl}</div>${rows}</div>`;return true;}
+function copyR(){if(!sumData)return;navigator.clipboard.writeText('=== COWORK DENTAL INTERVIEW ===\n\n'+Object.entries(sumData).map(([k,v])=>`${k}: ${v}`).join('\n')).catch(()=>{});const b=document.querySelector('.xbtn');if(b){b.textContent='Copied!';setTimeout(()=>b.textContent='Copy results',2000);}}
+function newI(){H=[];topics=0;sumData=null;document.getElementById('messages').innerHTML='';document.getElementById('spanel').style.display='none';document.getElementById('izone').style.display='flex';setProg(0,'Getting started');startI();}
+async function startI(){busy=true;document.getElementById('sbtn').disabled=true;showT();try{const o=await callC([{role:'user',content:'[Begin the interview]'}]);hideT();H.push({role:'assistant',content:o});addMsg('assistant',o);setProg(5,'Interview started');document.getElementById('sbtn').disabled=false;document.getElementById('user-input').focus();}catch(e){hideT();const fb="Hi there! Thanks for taking a few minutes. I'm researching how dental practices handle patient recall and day-to-day admin. To start — how many providers do you have and roughly how long have you been open?";addMsg('assistant',fb);H.push({role:'assistant',content:fb});document.getElementById('sbtn').disabled=false;}busy=false;}
+async function send(){const inp=document.getElementById('user-input');const txt=inp?.value.trim();if(!txt||busy)return;inp.value='';inp.style.height='auto';busy=true;document.getElementById('sbtn').disabled=true;addMsg('user',txt);H.push({role:'user',content:txt});topics=Math.min(6,topics+(scoreT(txt)>0?1:0));const pct=Math.min(90,(topics/6)*90);const lbls=['Getting started','Practice basics','Patient recall','Admin workflow','Tools & software','Willingness to pay','Wrapping up'];setProg(pct,lbls[Math.min(topics,6)]);showT();try{const rep=await callC(H);hideT();if(!showSum(rep)){const cl=rep.replace('INTERVIEW_COMPLETE','').trim();addMsg('assistant',cl);H.push({role:'assistant',content:rep});topics=Math.min(6,topics+(scoreT(cl)>0?1:0));setProg(Math.min(90,(topics/6)*90),lbls[Math.min(topics,6)]);}}catch(e){hideT();addMsg('assistant',"Sorry, connection issue — could you repeat that?");}busy=false;document.getElementById('sbtn').disabled=false;document.getElementById('user-input')?.focus();}
 startI();
 </script>
 </body>
