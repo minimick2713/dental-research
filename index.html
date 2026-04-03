@@ -8,1044 +8,279 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --sage: #4a7c59;
-    --sage-light: #e8f0eb;
-    --sage-mid: #b8d4be;
-    --sage-dark: #2d5a3d;
-    --cream: #faf8f4;
-    --warm-white: #ffffff;
-    --ink: #1a1a18;
-    --ink-mid: #4a4a46;
-    --ink-light: #8a8a84;
-    --ink-faint: #e8e6e0;
-    --amber: #c4622d;
-    --amber-light: #fdf0e8;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
-    color: var(--ink);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* — TOP BAR — */
-  .topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 2rem;
-    height: 56px;
-    background: var(--warm-white);
-    border-bottom: 1px solid var(--ink-faint);
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-  }
-
-  .logo-mark {
-    width: 28px;
-    height: 28px;
-    background: var(--sage);
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .logo-mark svg {
-    width: 16px;
-    height: 16px;
-    fill: none;
-    stroke: white;
-    stroke-width: 2;
-    stroke-linecap: round;
-  }
-
-  .logo-name {
-    font-family: 'DM Serif Display', serif;
-    font-size: 17px;
-    color: var(--ink);
-    letter-spacing: -0.02em;
-  }
-
-  .topbar-right {
-    font-size: 12px;
-    color: var(--ink-light);
-  }
-
-  /* — HERO — */
-  .hero {
-    background: var(--warm-white);
-    border-bottom: 1px solid var(--ink-faint);
-    padding: 2.5rem 2rem 2rem;
-    text-align: center;
-  }
-
-  .hero-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--sage-light);
-    color: var(--sage-dark);
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    padding: 4px 12px;
-    border-radius: 20px;
-    margin-bottom: 1rem;
-  }
-
-  .hero-eyebrow-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--sage);
-    animation: breathe 2s ease-in-out infinite;
-  }
-
-  @keyframes breathe {
-    0%, 100% { opacity: 1; }
-    50% { opacity: .4; }
-  }
-
-  .hero h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(24px, 4vw, 36px);
-    line-height: 1.2;
-    color: var(--ink);
-    letter-spacing: -0.03em;
-    margin-bottom: .75rem;
-    max-width: 520px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .hero h1 em {
-    font-style: italic;
-    color: var(--sage);
-  }
-
-  .hero-sub {
-    font-size: 14px;
-    color: var(--ink-mid);
-    line-height: 1.6;
-    max-width: 420px;
-    margin: 0 auto 1.25rem;
-    font-weight: 300;
-  }
-
-  .hero-meta {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-    font-size: 12px;
-    color: var(--ink-light);
-  }
-
-  .hero-meta-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .hero-meta-item svg {
-    width: 13px;
-    height: 13px;
-    stroke: var(--ink-light);
-    fill: none;
-    stroke-width: 1.5;
-    stroke-linecap: round;
-  }
-
-  /* — MAIN LAYOUT — */
-  .main {
-    flex: 1;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 2rem 1rem;
-  }
-
-  .chat-card {
-    width: 100%;
-    max-width: 640px;
-    background: var(--warm-white);
-    border: 1px solid var(--ink-faint);
-    border-radius: 16px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 2px 24px rgba(26,26,24,.06);
-  }
-
-  /* — CHAT HEADER — */
-  .chat-header {
-    padding: 1rem 1.25rem;
-    border-bottom: 1px solid var(--ink-faint);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--cream);
-  }
-
-  .ai-identity {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .ai-avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: var(--sage);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-
-  .ai-avatar svg {
-    width: 18px;
-    height: 18px;
-    fill: none;
-    stroke: white;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-  }
-
-  .ai-status-dot {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: #4ade80;
-    border: 2px solid var(--cream);
-  }
-
-  .ai-name {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink);
-  }
-
-  .ai-role {
-    font-size: 11px;
-    color: var(--ink-light);
-    margin-top: 1px;
-  }
-
-  .progress-section {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 4px;
-  }
-
-  .progress-text {
-    font-size: 11px;
-    color: var(--ink-light);
-  }
-
-  .progress-track {
-    width: 72px;
-    height: 3px;
-    background: var(--ink-faint);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-
-  .progress-thumb {
-    height: 100%;
-    background: var(--sage);
-    border-radius: 2px;
-    transition: width .5s cubic-bezier(.4,0,.2,1);
-    width: 0%;
-  }
-
-  /* — MESSAGES — */
-  .messages {
-    flex: 1;
-    padding: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    min-height: 360px;
-    max-height: 480px;
-    overflow-y: auto;
-    scroll-behavior: smooth;
-  }
-
-  .messages::-webkit-scrollbar { width: 4px; }
-  .messages::-webkit-scrollbar-track { background: transparent; }
-  .messages::-webkit-scrollbar-thumb { background: var(--ink-faint); border-radius: 2px; }
-
-  .msg-row {
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-    animation: fadeUp .25s ease;
-  }
-
-  .msg-row.user { flex-direction: row-reverse; }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .msg-av {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: 500;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
-  .msg-av.ai { background: var(--sage); color: white; }
-  .msg-av.user { background: var(--ink-faint); color: var(--ink-mid); }
-
-  .bubble {
-    max-width: 78%;
-    padding: .7rem .95rem;
-    border-radius: 4px 14px 14px 14px;
-    font-size: 13.5px;
-    line-height: 1.65;
-    color: var(--ink);
-  }
-
-  .bubble.ai {
-    background: var(--cream);
-    border: 1px solid var(--ink-faint);
-    border-radius: 4px 14px 14px 14px;
-  }
-
-  .bubble.user {
-    background: var(--sage);
-    color: white;
-    border-radius: 14px 4px 14px 14px;
-  }
-
-  /* — TYPING — */
-  .typing-row {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    animation: fadeUp .2s ease;
-  }
-
-  .typing-bubble {
-    background: var(--cream);
-    border: 1px solid var(--ink-faint);
-    border-radius: 4px 14px 14px 14px;
-    padding: .65rem .9rem;
-    display: flex;
-    gap: 5px;
-    align-items: center;
-  }
-
-  .tdot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--ink-light);
-    animation: tdot 1.3s ease-in-out infinite;
-  }
-  .tdot:nth-child(2) { animation-delay: .15s; }
-  .tdot:nth-child(3) { animation-delay: .3s; }
-  @keyframes tdot { 0%,80%,100%{opacity:.25;transform:scale(.8)} 40%{opacity:1;transform:scale(1)} }
-
-  /* — INPUT — */
-  .input-zone {
-    border-top: 1px solid var(--ink-faint);
-    padding: .9rem 1.1rem;
-    display: flex;
-    gap: 10px;
-    align-items: flex-end;
-    background: var(--cream);
-  }
-
-  .input-zone textarea {
-    flex: 1;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13.5px;
-    font-weight: 300;
-    line-height: 1.5;
-    color: var(--ink);
-    background: var(--warm-white);
-    border: 1px solid var(--ink-faint);
-    border-radius: 10px;
-    padding: 10px 14px;
-    resize: none;
-    min-height: 42px;
-    max-height: 120px;
-    overflow-y: auto;
-    transition: border-color .15s;
-  }
-
-  .input-zone textarea:focus {
-    outline: none;
-    border-color: var(--sage-mid);
-  }
-
-  .input-zone textarea::placeholder {
-    color: var(--ink-light);
-  }
-
-  .send-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: none;
-    background: var(--sage);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: background .15s, transform .1s;
-  }
-
-  .send-btn:hover { background: var(--sage-dark); }
-  .send-btn:active { transform: scale(.95); }
-  .send-btn:disabled { background: var(--ink-faint); cursor: not-allowed; }
-  .send-btn:disabled svg { stroke: var(--ink-light); }
-
-  .send-btn svg {
-    width: 16px;
-    height: 16px;
-    fill: none;
-    stroke: white;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  /* — SUMMARY — */
-  .summary-panel {
-    display: none;
-    animation: fadeUp .3s ease;
-  }
-
-  .summary-header {
-    padding: 1rem 1.25rem;
-    background: var(--sage-light);
-    border-top: 1px solid var(--sage-mid);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .summary-title {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--sage-dark);
-    display: flex;
-    align-items: center;
-    gap: 7px;
-  }
-
-  .summary-title svg {
-    width: 15px;
-    height: 15px;
-    fill: none;
-    stroke: var(--sage-dark);
-    stroke-width: 1.8;
-    stroke-linecap: round;
-  }
-
-  .summary-actions {
-    display: flex;
-    gap: 8px;
-  }
-
-  .s-btn {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    padding: 5px 12px;
-    border-radius: 20px;
-    border: 1px solid var(--sage-mid);
-    background: transparent;
-    color: var(--sage-dark);
-    cursor: pointer;
-    transition: background .15s;
-  }
-  .s-btn:hover { background: rgba(74,124,89,.1); }
-  .s-btn.primary {
-    background: var(--sage);
-    color: white;
-    border-color: var(--sage);
-  }
-  .s-btn.primary:hover { background: var(--sage-dark); }
-
-  .summary-body {
-    padding: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .signal-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 5px 14px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: .05em;
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-  }
-
-  .signal-badge-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-  }
-
-  .signal-hot { background: #ecfdf5; color: #065f46; }
-  .signal-hot .signal-badge-dot { background: #10b981; }
-  .signal-warm { background: var(--amber-light); color: #7c2d12; }
-  .signal-warm .signal-badge-dot { background: var(--amber); }
-  .signal-cold { background: #fef2f2; color: #991b1b; }
-  .signal-cold .signal-badge-dot { background: #ef4444; }
-
-  .insight-row {
-    display: flex;
-    gap: 12px;
-    padding: .6rem 0;
-    border-bottom: 1px solid var(--ink-faint);
-    align-items: flex-start;
-  }
-  .insight-row:last-child { border-bottom: none; }
-
-  .insight-key {
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--ink-light);
-    text-transform: uppercase;
-    letter-spacing: .05em;
-    width: 130px;
-    flex-shrink: 0;
-    padding-top: 1px;
-    line-height: 1.4;
-  }
-
-  .insight-val {
-    font-size: 13px;
-    color: var(--ink);
-    line-height: 1.55;
-    flex: 1;
-  }
-
-  .quote-val {
-    font-family: 'DM Serif Display', serif;
-    font-size: 14px;
-    font-style: italic;
-    color: var(--sage-dark);
-    line-height: 1.5;
-  }
-
-  /* — FOOTER — */
-  footer {
-    text-align: center;
-    padding: 1.25rem;
-    font-size: 11px;
-    color: var(--ink-light);
-    border-top: 1px solid var(--ink-faint);
-  }
-
-  footer a { color: var(--sage); text-decoration: none; }
-
-  /* — API KEY GATE — */
-  .api-gate {
-    width: 100%;
-    max-width: 480px;
-    background: var(--warm-white);
-    border: 1px solid var(--ink-faint);
-    border-radius: 16px;
-    padding: 2rem;
-    box-shadow: 0 2px 24px rgba(26,26,24,.06);
-    text-align: center;
-  }
-
-  .gate-icon {
-    width: 48px;
-    height: 48px;
-    background: var(--sage-light);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.25rem;
-  }
-
-  .gate-icon svg {
-    width: 24px;
-    height: 24px;
-    fill: none;
-    stroke: var(--sage);
-    stroke-width: 1.8;
-    stroke-linecap: round;
-  }
-
-  .gate-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 20px;
-    color: var(--ink);
-    margin-bottom: .5rem;
-    letter-spacing: -.02em;
-  }
-
-  .gate-sub {
-    font-size: 13px;
-    color: var(--ink-mid);
-    line-height: 1.6;
-    margin-bottom: 1.25rem;
-    font-weight: 300;
-  }
-
-  .gate-input {
-    width: 100%;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    padding: 11px 14px;
-    border: 1px solid var(--ink-faint);
-    border-radius: 8px;
-    color: var(--ink);
-    background: var(--cream);
-    margin-bottom: .75rem;
-    transition: border-color .15s;
-  }
-
-  .gate-input:focus { outline: none; border-color: var(--sage-mid); }
-
-  .gate-btn {
-    width: 100%;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    padding: 11px;
-    border: none;
-    border-radius: 8px;
-    background: var(--sage);
-    color: white;
-    cursor: pointer;
-    transition: background .15s;
-  }
-
-  .gate-btn:hover { background: var(--sage-dark); }
-
-  .gate-note {
-    font-size: 11px;
-    color: var(--ink-light);
-    margin-top: .75rem;
-    line-height: 1.5;
-  }
-
-  .gate-note a { color: var(--sage); text-decoration: none; }
-
-  @media (max-width: 520px) {
-    .hero { padding: 1.5rem 1rem 1.25rem; }
-    .topbar { padding: 0 1rem; }
-    .main { padding: 1rem .75rem; }
-    .hero-meta { flex-wrap: wrap; gap: .75rem; }
-  }
+:root{--sage:#4a7c59;--sage-light:#e8f0eb;--sage-mid:#b8d4be;--sage-dark:#2d5a3d;--cream:#faf8f4;--ww:#ffffff;--ink:#1a1a18;--ink-mid:#4a4a46;--ink-light:#8a8a84;--ink-faint:#e8e6e0;--amber:#c4622d;--amber-light:#fdf0e8}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;display:flex;flex-direction:column}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:56px;background:var(--ww);border-bottom:1px solid var(--ink-faint)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-mark{width:28px;height:28px;background:var(--sage);border-radius:6px;display:flex;align-items:center;justify-content:center}
+.logo-mark svg{width:16px;height:16px;fill:none;stroke:white;stroke-width:2;stroke-linecap:round}
+.logo-name{font-family:'DM Serif Display',serif;font-size:17px;color:var(--ink);letter-spacing:-0.02em}
+.topbar-right{font-size:12px;color:var(--ink-light)}
+.hero{background:var(--ww);border-bottom:1px solid var(--ink-faint);padding:2.5rem 2rem 2rem;text-align:center}
+.eyebrow{display:inline-flex;align-items:center;gap:6px;background:var(--sage-light);color:var(--sage-dark);font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:1rem}
+.edot{width:6px;height:6px;border-radius:50%;background:var(--sage);animation:breathe 2s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(24px,4vw,36px);line-height:1.2;letter-spacing:-0.03em;margin-bottom:.75rem;max-width:520px;margin-left:auto;margin-right:auto}
+.hero h1 em{font-style:italic;color:var(--sage)}
+.hero-sub{font-size:14px;color:var(--ink-mid);line-height:1.6;max-width:420px;margin:0 auto 1.25rem;font-weight:300}
+.hero-meta{display:flex;align-items:center;justify-content:center;gap:1.5rem;font-size:12px;color:var(--ink-light);flex-wrap:wrap}
+.hmi{display:flex;align-items:center;gap:5px}
+.hmi svg{width:13px;height:13px;stroke:var(--ink-light);fill:none;stroke-width:1.5;stroke-linecap:round}
+.main{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:2rem 1rem}
+.card{width:100%;max-width:640px;background:var(--ww);border:1px solid var(--ink-faint);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 24px rgba(26,26,24,.06)}
+.chat-hd{padding:1rem 1.25rem;border-bottom:1px solid var(--ink-faint);display:flex;align-items:center;justify-content:space-between;background:var(--cream)}
+.ai-id{display:flex;align-items:center;gap:10px}
+.ai-av{width:36px;height:36px;border-radius:50%;background:var(--sage);display:flex;align-items:center;justify-content:center;position:relative}
+.ai-av svg{width:18px;height:18px;fill:none;stroke:white;stroke-width:1.8;stroke-linecap:round}
+.status-dot{position:absolute;bottom:0;right:0;width:9px;height:9px;border-radius:50%;background:#4ade80;border:2px solid var(--cream)}
+.ai-name{font-size:13px;font-weight:500;color:var(--ink)}
+.ai-role{font-size:11px;color:var(--ink-light);margin-top:1px}
+.prog-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.prog-lbl{font-size:11px;color:var(--ink-light)}
+.prog-track{width:72px;height:3px;background:var(--ink-faint);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:var(--sage);border-radius:2px;transition:width .5s cubic-bezier(.4,0,.2,1);width:0%}
+.messages{flex:1;padding:1.25rem;display:flex;flex-direction:column;gap:1rem;min-height:360px;max-height:480px;overflow-y:auto;scroll-behavior:smooth}
+.messages::-webkit-scrollbar{width:4px}
+.messages::-webkit-scrollbar-thumb{background:var(--ink-faint);border-radius:2px}
+.mrow{display:flex;gap:10px;align-items:flex-start;animation:fu .25s ease}
+.mrow.u{flex-direction:row-reverse}
+@keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.mav{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;margin-top:2px}
+.mav.ai{background:var(--sage);color:white}
+.mav.u{background:var(--ink-faint);color:var(--ink-mid)}
+.bub{max-width:78%;padding:.7rem .95rem;font-size:13.5px;line-height:1.65;color:var(--ink)}
+.bub.ai{background:var(--cream);border:1px solid var(--ink-faint);border-radius:4px 14px 14px 14px}
+.bub.u{background:var(--sage);color:white;border-radius:14px 4px 14px 14px}
+.trow{display:flex;gap:10px;align-items:center;animation:fu .2s ease}
+.tbub{background:var(--cream);border:1px solid var(--ink-faint);border-radius:4px 14px 14px 14px;padding:.65rem .9rem;display:flex;gap:5px;align-items:center}
+.td{width:6px;height:6px;border-radius:50%;background:var(--ink-light);animation:td 1.3s ease-in-out infinite}
+.td:nth-child(2){animation-delay:.15s}
+.td:nth-child(3){animation-delay:.3s}
+@keyframes td{0%,80%,100%{opacity:.25;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
+.izone{border-top:1px solid var(--ink-faint);padding:.9rem 1.1rem;display:flex;gap:10px;align-items:flex-end;background:var(--cream)}
+.izone textarea{flex:1;font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:300;line-height:1.5;color:var(--ink);background:var(--ww);border:1px solid var(--ink-faint);border-radius:10px;padding:10px 14px;resize:none;min-height:42px;max-height:120px;overflow-y:auto;transition:border-color .15s}
+.izone textarea:focus{outline:none;border-color:var(--sage-mid)}
+.izone textarea::placeholder{color:var(--ink-light)}
+.sbtn{width:40px;height:40px;border-radius:50%;border:none;background:var(--sage);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s,transform .1s}
+.sbtn:hover{background:var(--sage-dark)}
+.sbtn:active{transform:scale(.95)}
+.sbtn:disabled{background:var(--ink-faint);cursor:not-allowed}
+.sbtn svg{width:16px;height:16px;fill:none;stroke:white;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.spanel{display:none;animation:fu .3s ease}
+.shd{padding:1rem 1.25rem;background:var(--sage-light);border-top:1px solid var(--sage-mid);display:flex;align-items:center;justify-content:space-between}
+.stitle{font-size:13px;font-weight:500;color:var(--sage-dark);display:flex;align-items:center;gap:7px}
+.stitle svg{width:15px;height:15px;fill:none;stroke:var(--sage-dark);stroke-width:1.8;stroke-linecap:round}
+.sacts{display:flex;gap:8px}
+.xbtn{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;padding:5px 12px;border-radius:20px;border:1px solid var(--sage-mid);background:transparent;color:var(--sage-dark);cursor:pointer;transition:background .15s}
+.xbtn:hover{background:rgba(74,124,89,.1)}
+.xbtn.p{background:var(--sage);color:white;border-color:var(--sage)}
+.xbtn.p:hover{background:var(--sage-dark)}
+.sbody{padding:1.25rem;display:flex;flex-direction:column;gap:0}
+.sigb{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;margin-bottom:1rem}
+.sigb-dot{width:7px;height:7px;border-radius:50%}
+.hot{background:#ecfdf5;color:#065f46}.hot .sigb-dot{background:#10b981}
+.warm{background:var(--amber-light);color:#7c2d12}.warm .sigb-dot{background:var(--amber)}
+.cold{background:#fef2f2;color:#991b1b}.cold .sigb-dot{background:#ef4444}
+.irow{display:flex;gap:12px;padding:.6rem 0;border-bottom:1px solid var(--ink-faint);align-items:flex-start}
+.irow:last-child{border-bottom:none}
+.ikey{font-size:11px;font-weight:500;color:var(--ink-light);text-transform:uppercase;letter-spacing:.05em;width:130px;flex-shrink:0;padding-top:1px;line-height:1.4}
+.ival{font-size:13px;color:var(--ink);line-height:1.55;flex:1}
+.qval{font-family:'DM Serif Display',serif;font-size:14px;font-style:italic;color:var(--sage-dark);line-height:1.5}
+footer{text-align:center;padding:1.25rem;font-size:11px;color:var(--ink-light);border-top:1px solid var(--ink-faint)}
+footer a{color:var(--sage);text-decoration:none}
 </style>
 </head>
 <body>
-
 <div class="topbar">
   <a class="logo" href="#">
-    <div class="logo-mark">
-      <svg viewBox="0 0 16 16"><path d="M8 2L14 6v8H2V6z"/><path d="M5 14V9h6v5"/></svg>
-    </div>
+    <div class="logo-mark"><svg viewBox="0 0 16 16"><path d="M8 2L14 6v8H2V6z"/><path d="M5 14V9h6v5"/></svg></div>
     <span class="logo-name">Cowork</span>
   </a>
   <span class="topbar-right">Practice research · Confidential</span>
 </div>
-
 <div class="hero">
-  <div class="hero-eyebrow">
-    <div class="hero-eyebrow-dot"></div>
-    Live research interview
-  </div>
+  <div class="eyebrow"><div class="edot"></div>Live research interview</div>
   <h1>Help us understand your <em>practice</em></h1>
   <p class="hero-sub">10 minutes. No sales pitch. We're trying to understand the real challenges dental practices face — your answers shape what we build.</p>
   <div class="hero-meta">
-    <div class="hero-meta-item">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      About 10 minutes
-    </div>
-    <div class="hero-meta-item">
-      <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      Answers are confidential
-    </div>
-    <div class="hero-meta-item">
-      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      Conversational format
-    </div>
+    <div class="hmi"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>About 10 minutes</div>
+    <div class="hmi"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Answers are confidential</div>
+    <div class="hmi"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Conversational format</div>
   </div>
 </div>
-
-<div class="main" id="main-area">
-  <!-- API gate shown first, replaced by chat once key is set -->
-  <div class="chat-card" id="chat-card" style="display:flex">
-    <div class="gate-icon">
-      <svg viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+<div class="main">
+  <div class="card">
+    <div class="chat-hd">
+      <div class="ai-id">
+        <div class="ai-av">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <div class="status-dot"></div>
+        </div>
+        <div><div class="ai-name">Practice researcher</div><div class="ai-role">Cowork discovery team</div></div>
+      </div>
+      <div class="prog-wrap">
+        <div class="prog-lbl" id="prog-text">Getting started</div>
+        <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+      </div>
     </div>
-    <div class="gate-title">Enter your API key to start</div>
-    <p class="gate-sub">This tool uses Claude AI to conduct the interview. Enter your Anthropic API key below — it's stored only in your browser and never sent anywhere except directly to Anthropic.</p>
-    <input class="gate-input" type="password" id="api-key-input" placeholder="sk-ant-api03-..." autocomplete="off">
-    <button class="gate-btn" onclick="initWithKey()">Start interview tool</button>
-    <p class="gate-note">Get an API key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>. Claude Sonnet usage costs ~$0.01–0.05 per interview.</p>
+    <div class="messages" id="messages"></div>
+    <div class="izone" id="izone">
+      <textarea id="user-input" placeholder="Type your response..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+      <button class="sbtn" id="sbtn" onclick="send()" disabled>
+        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+    <div class="spanel" id="spanel"></div>
   </div>
 </div>
-
-<footer>
-  Built by Cowork &mdash; <a href="mailto:hello@cowork.ai">hello@cowork.ai</a>
-</footer>
-
+<footer>Built by Cowork &mdash; <a href="mailto:team@prooftrust.app">team@prooftrust.app</a></footer>
 <script>
-const SYSTEM_PROMPT = `You are conducting a discovery interview on behalf of a company called Cowork that is researching whether dental practices have painful enough problems with lapsed patients and administrative overhead to pay for an AI automation solution.
+const K='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';
+const SYS=`You are conducting a discovery interview on behalf of a company called Cowork researching whether dental practices have painful problems with lapsed patients and admin overhead to pay for an AI automation solution.
 
-Your persona: warm, genuinely curious, professional but not corporate. You sound like a thoughtful researcher, not a salesperson. You are NOT selling anything.
+Persona: warm, genuinely curious, professional but not corporate. NOT selling anything.
 
-Your goal: have a natural conversation that uncovers honest signal across 6 topic areas. Move through them organically — don't make it feel like a questionnaire.
+Cover all 6 topics organically before ending:
+1. Practice basics — size, PMS software, years open
+2. Lapsed patient problem — how many, what they do about it, pain level
+3. Admin burden — which tasks eat most time, who handles them
+4. Current tools — what they pay for, what gaps remain
+5. Willingness to pay — who decides, budget sense, what they'd pay
+6. Open-ended — biggest headache, anything else
 
-The 6 topic areas (cover all before ending):
-1. Practice basics — size, PMS software they use, how long they've been open
-2. Lapsed patient problem — how many, what they currently do about it, how painful it is
-3. Administrative burden — which tasks eat the most time, who handles them
-4. Current tools — what software they already pay for, what gaps remain
-5. Willingness to pay / buying process — who decides, rough budget sense, what they'd pay for
-6. Open-ended — biggest practice headache right now, anything else on their mind
+Rules:
+- ONE question per message only
+- Messages 1-3 sentences max
+- Probe interesting or short answers before moving on
+- Never say "great question" or "that's interesting"
+- Don't reveal you're AI unless asked; if asked, be honest
+- Don't pitch anything
 
-Conversation rules:
-- Ask ONLY ONE question per message. Never stack two questions.
-- Keep your messages SHORT — 1 to 3 sentences maximum.
-- When an answer is interesting or short, probe deeper naturally before moving on.
-- Match the energy of the respondent — if they're chatty, engage warmly; if brief, stay efficient.
-- Never say "great question" or "that's interesting" — just respond and move forward.
-- Do not reveal you are AI unless directly asked. If asked, be honest.
-- Do not mention Cowork's product features or pitch anything.
-
-When you have genuinely covered all 6 areas (this usually takes 12–20 exchanges), end the interview. Output EXACTLY this marker on its own line:
+When all 6 topics are genuinely covered, end with exactly:
 INTERVIEW_COMPLETE
-Then on the very next line output a single JSON object (no markdown, no backticks, no extra text before or after):
-{"practice_size":"","pms":"","years_open":"","lapsed_pain_score":"1-10","lapsed_count_estimate":"","current_reactivation_method":"","reactivation_budget_spent":"","admin_hours_weekly":"","biggest_admin_pain":"","current_tools":"","monthly_software_spend":"","willingness_to_pay":"","decision_maker":"","key_quote":"","overall_signal":"hot|warm|cold","signal_reasoning":"","notes":""}
+{"practice_size":"","pms":"","years_open":"","lapsed_pain_score":"1-10","lapsed_count_estimate":"","current_reactivation_method":"","admin_hours_weekly":"","biggest_admin_pain":"","current_tools":"","willingness_to_pay":"","decision_maker":"","key_quote":"","overall_signal":"hot|warm|cold","signal_reasoning":"","notes":""}
 
-Fill every field with what you learned. Be specific. key_quote = the single most revealing thing they said verbatim. overall_signal = your honest read of how likely they are to pay for a solution. signal_reasoning = one sentence explaining your rating.
+Fill every field. key_quote = most revealing thing verbatim. overall_signal = honest prospect rating.
+Start with a warm 2-3 sentence intro and first question.`;
 
-Start by introducing yourself briefly and asking your first question. Keep the intro to 2–3 sentences max.`;
+let H=[],busy=false,topics=0,sumData=null;
 
-let apiKey = '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';
-let history = [];
-let busy = false;
-let topicsHit = 0;
-let summaryData = null;
-
-function initWithKey() {
-  const val = document.getElementById('api-key-input').value.trim();
-  if (!val.startsWith('sk-ant')) {
-    document.getElementById('api-key-input').style.borderColor = '#ef4444';
-    return;
-  }
-  apiKey = val;
-  buildChatUI();
-  startInterview();
+function addMsg(role,text){
+  const m=document.getElementById('messages'),row=document.createElement('div');
+  row.className='mrow'+(role==='user'?' u':'');
+  const av=document.createElement('div');av.className='mav '+(role==='user'?'u':'ai');av.textContent=role==='user'?'You':'AI';
+  const b=document.createElement('div');b.className='bub '+(role==='user'?'u':'ai');b.textContent=text;
+  row.appendChild(av);row.appendChild(b);m.appendChild(row);m.scrollTop=m.scrollHeight;
 }
-
-document.getElementById('api-key-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') initWithKey();
-});
-
-function buildChatUI() {
-  const main = document.getElementById('main-area');
-  main.innerHTML = `
-    <div class="chat-card" id="chat-card">
-      <div class="chat-header">
-        <div class="ai-identity">
-          <div class="ai-avatar">
-            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            <div class="ai-status-dot"></div>
-          </div>
-          <div>
-            <div class="ai-name">Practice researcher</div>
-            <div class="ai-role">Cowork discovery team</div>
-          </div>
-        </div>
-        <div class="progress-section">
-          <div class="progress-text" id="prog-text">Getting started</div>
-          <div class="progress-track"><div class="progress-thumb" id="prog-thumb"></div></div>
-        </div>
-      </div>
-      <div class="messages" id="messages"></div>
-      <div class="input-zone" id="input-zone">
-        <textarea id="user-input" placeholder="Type your response..." rows="1"
-          onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
-        <button class="send-btn" id="send-btn" onclick="send()" disabled>
-          <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        </button>
-      </div>
-      <div class="summary-panel" id="summary-panel"></div>
-    </div>`;
+function showT(){
+  const m=document.getElementById('messages'),r=document.createElement('div');
+  r.className='trow';r.id='typing';r.innerHTML='<div class="mav ai">AI</div><div class="tbub"><div class="td"></div><div class="td"></div><div class="td"></div></div>';
+  m.appendChild(r);m.scrollTop=m.scrollHeight;
 }
-
-function addMsg(role, text) {
-  const msgs = document.getElementById('messages');
-  const row = document.createElement('div');
-  row.className = 'msg-row ' + (role === 'user' ? 'user' : '');
-  const av = document.createElement('div');
-  av.className = 'msg-av ' + (role === 'user' ? 'user' : 'ai');
-  av.textContent = role === 'user' ? 'You' : 'AI';
-  const bub = document.createElement('div');
-  bub.className = 'bubble ' + (role === 'user' ? 'user' : 'ai');
-  bub.textContent = text;
-  row.appendChild(av);
-  row.appendChild(bub);
-  msgs.appendChild(row);
-  msgs.scrollTop = msgs.scrollHeight;
+function hideT(){const t=document.getElementById('typing');if(t)t.remove();}
+function setProg(pct,lbl){
+  const f=document.getElementById('prog-fill'),l=document.getElementById('prog-text');
+  if(f)f.style.width=Math.round(pct)+'%';if(l)l.textContent=lbl;
 }
-
-function showTyping() {
-  const msgs = document.getElementById('messages');
-  const row = document.createElement('div');
-  row.className = 'typing-row';
-  row.id = 'typing';
-  row.innerHTML = `<div class="msg-av ai">AI</div><div class="typing-bubble"><div class="tdot"></div><div class="tdot"></div><div class="tdot"></div></div>`;
-  msgs.appendChild(row);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function removeTyping() {
-  const t = document.getElementById('typing');
-  if (t) t.remove();
-}
-
-function setProgress(pct, label) {
-  const thumb = document.getElementById('prog-thumb');
-  const text = document.getElementById('prog-text');
-  if (thumb) thumb.style.width = Math.round(pct) + '%';
-  if (text) text.textContent = label;
-}
-
-function autoResize(el) {
-  el.style.height = 'auto';
-  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
-}
-
-function handleKey(e) {
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    send();
-  }
-}
-
-function scoreTopics(text) {
-  const t = text.toLowerCase();
-  let n = 0;
-  if (/dentrix|eaglesoft|open dental|curve|tab32|pms|software|system/.test(t)) n++;
-  if (/lapsed|recall|reactivat|overdue|haven.t been|not seen|recall/.test(t)) n++;
-  if (/admin|hours|staff|front desk|paperwork|billing|insurance|time/.test(t)) n++;
-  if (/tool|weave|nexhealth|paying|subscription|software|use for/.test(t)) n++;
-  if (/pay|budget|price|cost|month|decision|approve|spend/.test(t)) n++;
-  if (/headache|biggest|frustrat|wish|problem|challenge|hard/.test(t)) n++;
+function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,120)+'px';}
+function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}
+function scoreT(t){
+  const s=t.toLowerCase();let n=0;
+  if(/dentrix|eaglesoft|open dental|curve|pms|software/.test(s))n++;
+  if(/lapsed|recall|reactivat|overdue|not seen/.test(s))n++;
+  if(/admin|hours|staff|front desk|billing|insurance/.test(s))n++;
+  if(/tool|weave|nexhealth|paying|subscription/.test(s))n++;
+  if(/pay|budget|price|cost|month|decision/.test(s))n++;
+  if(/headache|biggest|frustrat|wish|problem|challenge/.test(s))n++;
   return n;
 }
-
-async function callClaude(msgs) {
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true'
-    },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1024,
-      system: SYSTEM_PROMPT,
-      messages: msgs
-    })
+async function callC(msgs){
+  const r=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','x-api-key':K,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1024,system:SYS,messages:msgs})
   });
-  if (!res.ok) throw new Error('API error ' + res.status);
-  const data = await res.json();
-  return data.content?.[0]?.text || '';
+  if(!r.ok)throw new Error('API '+r.status);
+  const d=await r.json();return d.content?.[0]?.text||'';
 }
-
-function showSummary(raw) {
-  const marker = raw.indexOf('INTERVIEW_COMPLETE');
-  if (marker === -1) return false;
-  const jStart = raw.indexOf('{', marker);
-  const jEnd = raw.lastIndexOf('}');
-  if (jStart === -1 || jEnd === -1) return false;
-  try {
-    summaryData = JSON.parse(raw.substring(jStart, jEnd + 1));
-  } catch(e) { return false; }
-
-  document.getElementById('input-zone').style.display = 'none';
-  setProgress(100, 'Complete');
-
-  const sig = summaryData.overall_signal || 'warm';
-  const sigClass = { hot:'signal-hot', warm:'signal-warm', cold:'signal-cold' }[sig] || 'signal-warm';
-  const sigLabel = { hot:'Hot prospect', warm:'Warm prospect', cold:'Cold prospect' }[sig] || 'Warm';
-
-  const fields = [
-    ['Practice size', summaryData.practice_size],
-    ['PMS software', summaryData.pms],
-    ['Years open', summaryData.years_open],
-    ['Lapsed patient pain', summaryData.lapsed_pain_score ? summaryData.lapsed_pain_score + ' / 10' : null],
-    ['Lapsed patients est.', summaryData.lapsed_count_estimate],
-    ['Current recall method', summaryData.current_reactivation_method],
-    ['Admin hours / week', summaryData.admin_hours_weekly],
-    ['Biggest admin pain', summaryData.biggest_admin_pain],
-    ['Current tools', summaryData.current_tools],
-    ['Monthly software spend', summaryData.monthly_software_spend],
-    ['Willingness to pay', summaryData.willingness_to_pay],
-    ['Decision maker', summaryData.decision_maker],
-    ['Notes', summaryData.notes],
-  ].filter(([,v]) => v && v.trim() && v !== '""' && v !== 'unknown' && v !== 'N/A');
-
-  let rows = fields.map(([k,v]) =>
-    `<div class="insight-row"><div class="insight-key">${k}</div><div class="insight-val">${v}</div></div>`
-  ).join('');
-
-  if (summaryData.key_quote && summaryData.key_quote.length > 2) {
-    rows += `<div class="insight-row"><div class="insight-key">Key quote</div><div class="insight-val quote-val">"${summaryData.key_quote}"</div></div>`;
-  }
-
-  if (summaryData.signal_reasoning) {
-    rows += `<div class="insight-row"><div class="insight-key">Why this signal</div><div class="insight-val">${summaryData.signal_reasoning}</div></div>`;
-  }
-
-  const panel = document.getElementById('summary-panel');
-  panel.style.display = 'block';
-  panel.innerHTML = `
-    <div class="summary-header">
-      <div class="summary-title">
-        <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-        Interview complete
-      </div>
-      <div class="summary-actions">
-        <button class="s-btn" onclick="copyResults()">Copy results</button>
-        <button class="s-btn primary" onclick="newInterview()">New interview</button>
-      </div>
-    </div>
-    <div class="summary-body">
-      <div class="signal-badge ${sigClass}">
-        <div class="signal-badge-dot"></div>
-        ${sigLabel}
-      </div>
-      ${rows}
-    </div>`;
-
+function showSum(raw){
+  const mi=raw.indexOf('INTERVIEW_COMPLETE');if(mi===-1)return false;
+  const js=raw.indexOf('{',mi),je=raw.lastIndexOf('}');if(js===-1||je===-1)return false;
+  try{sumData=JSON.parse(raw.substring(js,je+1));}catch(e){return false;}
+  document.getElementById('izone').style.display='none';
+  setProg(100,'Complete');
+  const sig=sumData.overall_signal||'warm';
+  const sc={hot:'hot',warm:'warm',cold:'cold'}[sig]||'warm';
+  const sl={hot:'Hot prospect',warm:'Warm prospect',cold:'Cold prospect'}[sig]||'Warm';
+  const fields=[
+    ['Practice size',sumData.practice_size],['PMS software',sumData.pms],['Years open',sumData.years_open],
+    ['Lapsed pain',sumData.lapsed_pain_score?sumData.lapsed_pain_score+' / 10':null],
+    ['Lapsed patients',sumData.lapsed_count_estimate],['Current recall',sumData.current_reactivation_method],
+    ['Admin hrs/week',sumData.admin_hours_weekly],['Biggest pain',sumData.biggest_admin_pain],
+    ['Tools',sumData.current_tools],['Willingness to pay',sumData.willingness_to_pay],
+    ['Decision maker',sumData.decision_maker],['Notes',sumData.notes],
+  ].filter(([,v])=>v&&v.trim()&&v!=='""');
+  let rows=fields.map(([k,v])=>`<div class="irow"><div class="ikey">${k}</div><div class="ival">${v}</div></div>`).join('');
+  if(sumData.key_quote&&sumData.key_quote.length>2)rows+=`<div class="irow"><div class="ikey">Key quote</div><div class="ival qval">"${sumData.key_quote}"</div></div>`;
+  if(sumData.signal_reasoning)rows+=`<div class="irow"><div class="ikey">Why</div><div class="ival">${sumData.signal_reasoning}</div></div>`;
+  const p=document.getElementById('spanel');p.style.display='block';
+  p.innerHTML=`<div class="shd"><div class="stitle"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Interview complete</div><div class="sacts"><button class="xbtn" onclick="copyR()">Copy results</button><button class="xbtn p" onclick="newI()">New interview</button></div></div><div class="sbody"><div class="sigb ${sc}"><div class="sigb-dot"></div>${sl}</div>${rows}</div>`;
   return true;
 }
-
-function copyResults() {
-  if (!summaryData) return;
-  const lines = Object.entries(summaryData).map(([k,v]) => `${k}: ${v}`).join('\n');
-  const full = '=== COWORK DENTAL INTERVIEW RESULTS ===\n\n' + lines;
-  navigator.clipboard.writeText(full).catch(()=>{});
-  const btn = document.querySelector('.s-btn');
-  if (btn) { btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy results', 2000); }
+function copyR(){
+  if(!sumData)return;
+  navigator.clipboard.writeText('=== COWORK DENTAL INTERVIEW ===\n\n'+Object.entries(sumData).map(([k,v])=>`${k}: ${v}`).join('\n')).catch(()=>{});
+  const b=document.querySelector('.xbtn');if(b){b.textContent='Copied!';setTimeout(()=>b.textContent='Copy results',2000);}
 }
-
-function newInterview() {
-  history = [];
-  topicsHit = 0;
-  summaryData = null;
-  buildChatUI();
-  startInterview();
+function newI(){
+  H=[];topics=0;sumData=null;
+  document.getElementById('messages').innerHTML='';
+  document.getElementById('spanel').style.display='none';
+  document.getElementById('izone').style.display='flex';
+  setProg(0,'Getting started');startI();
 }
-
-async function startInterview() {
-  busy = true;
-  showTyping();
-  try {
-    const opener = await callClaude([{ role: 'user', content: '[Begin the interview]' }]);
-    removeTyping();
-    history.push({ role: 'assistant', content: opener });
-    addMsg('assistant', opener);
-    topicsHit = Math.max(topicsHit, scoreTopics(opener));
-    setProgress(5, 'Interview started');
-    const btn = document.getElementById('send-btn');
-    if (btn) btn.disabled = false;
-    document.getElementById('user-input')?.focus();
-  } catch(e) {
-    removeTyping();
-    const fallback = "Hi there! Thanks so much for taking a few minutes — I'm doing research on how dental practices handle patient recall and day-to-day admin. To kick things off, could you tell me a bit about your practice? How many providers do you have, and roughly how long have you been open?";
-    addMsg('assistant', fallback);
-    history.push({ role: 'assistant', content: fallback });
-    const btn = document.getElementById('send-btn');
-    if (btn) btn.disabled = false;
+async function startI(){
+  busy=true;document.getElementById('sbtn').disabled=true;
+  showT();
+  try{
+    const o=await callC([{role:'user',content:'[Begin the interview]'}]);
+    hideT();H.push({role:'assistant',content:o});addMsg('assistant',o);
+    setProg(5,'Interview started');
+    document.getElementById('sbtn').disabled=false;
+    document.getElementById('user-input').focus();
+  }catch(e){
+    hideT();
+    const fb="Hi there! Thanks for taking a few minutes — I'm doing research on how dental practices handle patient recall and day-to-day admin. To start, could you tell me a bit about your practice? How many providers do you have and roughly how long have you been open?";
+    addMsg('assistant',fb);H.push({role:'assistant',content:fb});
+    document.getElementById('sbtn').disabled=false;
   }
-  busy = false;
+  busy=false;
 }
-
-async function send() {
-  const input = document.getElementById('user-input');
-  const text = input?.value.trim();
-  if (!text || busy) return;
-
-  input.value = '';
-  input.style.height = 'auto';
-  busy = true;
-  document.getElementById('send-btn').disabled = true;
-
-  addMsg('user', text);
-  history.push({ role: 'user', content: text });
-
-  const newTopics = scoreTopics(text);
-  topicsHit = Math.min(6, topicsHit + (newTopics > 0 ? 1 : 0));
-  const pct = Math.min(90, (topicsHit / 6) * 90);
-  const labels = ['Getting started','Practice basics','Patient recall','Admin workflow','Tools & software','Willingness to pay','Wrapping up'];
-  setProgress(pct, labels[Math.min(topicsHit, 6)]);
-
-  showTyping();
-  try {
-    const reply = await callClaude(history);
-    removeTyping();
-    if (!showSummary(reply)) {
-      const clean = reply.replace('INTERVIEW_COMPLETE','').trim();
-      addMsg('assistant', clean);
-      history.push({ role: 'assistant', content: reply });
-      topicsHit = Math.min(6, topicsHit + (scoreTopics(clean) > 0 ? 1 : 0));
-      const p2 = Math.min(90, (topicsHit / 6) * 90);
-      setProgress(p2, labels[Math.min(topicsHit, 6)]);
+async function send(){
+  const inp=document.getElementById('user-input');
+  const txt=inp?.value.trim();if(!txt||busy)return;
+  inp.value='';inp.style.height='auto';
+  busy=true;document.getElementById('sbtn').disabled=true;
+  addMsg('user',txt);H.push({role:'user',content:txt});
+  topics=Math.min(6,topics+(scoreT(txt)>0?1:0));
+  const pct=Math.min(90,(topics/6)*90);
+  const lbls=['Getting started','Practice basics','Patient recall','Admin workflow','Tools & software','Willingness to pay','Wrapping up'];
+  setProg(pct,lbls[Math.min(topics,6)]);
+  showT();
+  try{
+    const rep=await callC(H);hideT();
+    if(!showSum(rep)){
+      const cl=rep.replace('INTERVIEW_COMPLETE','').trim();
+      addMsg('assistant',cl);H.push({role:'assistant',content:rep});
+      topics=Math.min(6,topics+(scoreT(cl)>0?1:0));
+      setProg(Math.min(90,(topics/6)*90),lbls[Math.min(topics,6)]);
     }
-  } catch(e) {
-    removeTyping();
-    addMsg('assistant', "Sorry, I had a connection issue. Could you repeat your last answer?");
-  }
-  busy = false;
-  const btn = document.getElementById('send-btn');
-  if (btn) btn.disabled = false;
+  }catch(e){hideT();addMsg('assistant',"Sorry, connection issue — could you repeat that?");}
+  busy=false;document.getElementById('sbtn').disabled=false;
   document.getElementById('user-input')?.focus();
 }
+startI();
 </script>
 </body>
 </html>
