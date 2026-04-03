@@ -65,24 +65,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 .sbtn:active{transform:scale(.95)}
 .sbtn:disabled{background:var(--ink-faint);cursor:not-allowed}
 .sbtn svg{width:16px;height:16px;fill:none;stroke:white;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.spanel{display:none}
-.shd{padding:1rem 1.25rem;background:var(--sage-light);border-top:1px solid var(--sage-mid);display:flex;align-items:center;justify-content:space-between}
-.stitle{font-size:13px;font-weight:500;color:var(--sage-dark);display:flex;align-items:center;gap:7px}
-.stitle svg{width:15px;height:15px;fill:none;stroke:var(--sage-dark);stroke-width:1.8;stroke-linecap:round}
-.sacts{display:flex;gap:8px}
-.xbtn{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;padding:5px 12px;border-radius:20px;border:1px solid var(--sage-mid);background:transparent;color:var(--sage-dark);cursor:pointer}
-.xbtn.p{background:var(--sage);color:white;border-color:var(--sage)}
-.sbody{padding:1.25rem}
-.sigb{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;margin-bottom:1rem}
-.sigb-dot{width:7px;height:7px;border-radius:50%}
-.hot{background:#ecfdf5;color:#065f46}.hot .sigb-dot{background:#10b981}
-.warm{background:#fdf0e8;color:#7c2d12}.warm .sigb-dot{background:#c4622d}
-.cold{background:#fef2f2;color:#991b1b}.cold .sigb-dot{background:#ef4444}
-.irow{display:flex;gap:12px;padding:.6rem 0;border-bottom:1px solid var(--ink-faint);align-items:flex-start}
-.irow:last-child{border-bottom:none}
-.ikey{font-size:11px;font-weight:500;color:var(--ink-light);text-transform:uppercase;letter-spacing:.05em;width:130px;flex-shrink:0;padding-top:1px}
-.ival{font-size:13px;color:var(--ink);line-height:1.55;flex:1}
-.qval{font-family:'DM Serif Display',serif;font-size:14px;font-style:italic;color:var(--sage-dark);line-height:1.5}
+.thankyou{display:none;padding:2.5rem 2rem;text-align:center}
+.ty-icon{width:56px;height:56px;background:var(--sage-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem}
+.ty-icon svg{width:26px;height:26px;fill:none;stroke:var(--sage);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ty-title{font-family:'DM Serif Display',serif;font-size:24px;color:var(--ink);letter-spacing:-0.02em;margin-bottom:.75rem}
+.ty-sub{font-size:14px;color:var(--ink-mid);line-height:1.7;max-width:380px;margin:0 auto;font-weight:300}
 footer{text-align:center;padding:1.25rem;font-size:11px;color:var(--ink-light);border-top:1px solid var(--ink-faint)}
 footer a{color:var(--sage);text-decoration:none}
 @media(max-width:520px){.hero{padding:1.5rem 1rem 1.25rem}.topbar{padding:0 1rem}.main{padding:1rem .75rem}.hero-meta{gap:.75rem}}
@@ -120,7 +107,11 @@ footer a{color:var(--sage);text-decoration:none}
       <textarea id="user-input" placeholder="Type your response..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
       <button class="sbtn" id="sbtn" onclick="send()" disabled><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
     </div>
-    <div class="spanel" id="spanel"></div>
+    <div class="thankyou" id="thankyou">
+      <div class="ty-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="ty-title">Thank you so much.</div>
+      <p class="ty-sub">Your input is genuinely valuable and will directly shape what we build. We appreciate you taking the time — we'll be in touch if we have follow-up questions.</p>
+    </div>
   </div>
 </div>
 <footer>Built by Cowork &mdash; <a href="mailto:team@prooftrust.app">team@prooftrust.app</a></footer>
@@ -139,20 +130,144 @@ INTERVIEW_COMPLETE
 {"practice_size":"","pms":"","years_open":"","lapsed_pain_score":"1-10","lapsed_count_estimate":"","current_reactivation_method":"","admin_hours_weekly":"","biggest_admin_pain":"","current_tools":"","willingness_to_pay":"","decision_maker":"","key_quote":"","overall_signal":"hot|warm|cold","signal_reasoning":"","notes":""}
 Start with a warm 2-3 sentence intro and first question.`;
 
-let H=[],busy=false,topics=0,sumData=null;
-function addMsg(role,text){const m=document.getElementById('messages'),row=document.createElement('div');row.className='mrow'+(role==='user'?' u':'');const av=document.createElement('div');av.className='mav '+(role==='user'?'u':'ai');av.textContent=role==='user'?'You':'AI';const b=document.createElement('div');b.className='bub '+(role==='user'?'u':'ai');b.textContent=text;row.appendChild(av);row.appendChild(b);m.appendChild(row);m.scrollTop=m.scrollHeight;}
-function showT(){const m=document.getElementById('messages'),r=document.createElement('div');r.className='trow';r.id='typing';r.innerHTML='<div class="mav ai">AI</div><div class="tbub"><div class="td"></div><div class="td"></div><div class="td"></div></div>';m.appendChild(r);m.scrollTop=m.scrollHeight;}
+let H=[],busy=false,topics=0;
+
+function addMsg(role,text){
+  const m=document.getElementById('messages'),row=document.createElement('div');
+  row.className='mrow'+(role==='user'?' u':'');
+  const av=document.createElement('div');
+  av.className='mav '+(role==='user'?'u':'ai');
+  av.textContent=role==='user'?'You':'CW';
+  const b=document.createElement('div');
+  b.className='bub '+(role==='user'?'u':'ai');
+  b.textContent=text;
+  row.appendChild(av);row.appendChild(b);
+  m.appendChild(row);m.scrollTop=m.scrollHeight;
+}
+
+function showT(){
+  const m=document.getElementById('messages'),r=document.createElement('div');
+  r.className='trow';r.id='typing';
+  r.innerHTML='<div class="mav ai">CW</div><div class="tbub"><div class="td"></div><div class="td"></div><div class="td"></div></div>';
+  m.appendChild(r);m.scrollTop=m.scrollHeight;
+}
+
 function hideT(){const t=document.getElementById('typing');if(t)t.remove();}
-function setProg(pct,lbl){document.getElementById('prog-fill').style.width=Math.round(pct)+'%';document.getElementById('prog-text').textContent=lbl;}
+
+function setProg(pct,lbl){
+  document.getElementById('prog-fill').style.width=Math.round(pct)+'%';
+  document.getElementById('prog-text').textContent=lbl;
+}
+
 function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,120)+'px';}
 function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}
-function scoreT(t){const s=t.toLowerCase();let n=0;if(/dentrix|eaglesoft|open dental|pms/.test(s))n++;if(/lapsed|recall|reactivat|overdue/.test(s))n++;if(/admin|hours|staff|front desk|billing/.test(s))n++;if(/tool|weave|nexhealth|paying/.test(s))n++;if(/pay|budget|price|decision/.test(s))n++;if(/headache|biggest|frustrat|problem/.test(s))n++;return n;}
-async function callC(msgs){const r=await fetch(PROXY,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1024,system:SYS,messages:msgs})});if(!r.ok)throw new Error('API '+r.status);const d=await r.json();return d.content?.[0]?.text||'';}
-function showSum(raw){const mi=raw.indexOf('INTERVIEW_COMPLETE');if(mi===-1)return false;const js=raw.indexOf('{',mi),je=raw.lastIndexOf('}');if(js===-1||je===-1)return false;try{sumData=JSON.parse(raw.substring(js,je+1));}catch(e){return false;}document.getElementById('izone').style.display='none';setProg(100,'Complete');const sig=sumData.overall_signal||'warm';const sc={hot:'hot',warm:'warm',cold:'cold'}[sig]||'warm';const sl={hot:'Hot prospect',warm:'Warm prospect',cold:'Cold prospect'}[sig]||'Warm';const fields=[['Practice size',sumData.practice_size],['PMS',sumData.pms],['Years open',sumData.years_open],['Lapsed pain',sumData.lapsed_pain_score?sumData.lapsed_pain_score+' / 10':null],['Lapsed patients',sumData.lapsed_count_estimate],['Recall method',sumData.current_reactivation_method],['Admin hrs/wk',sumData.admin_hours_weekly],['Biggest pain',sumData.biggest_admin_pain],['Tools',sumData.current_tools],['Willingness to pay',sumData.willingness_to_pay],['Decision maker',sumData.decision_maker],['Notes',sumData.notes]].filter(([,v])=>v&&v.trim()&&v!=='""');let rows=fields.map(([k,v])=>`<div class="irow"><div class="ikey">${k}</div><div class="ival">${v}</div></div>`).join('');if(sumData.key_quote&&sumData.key_quote.length>2)rows+=`<div class="irow"><div class="ikey">Key quote</div><div class="ival qval">"${sumData.key_quote}"</div></div>`;if(sumData.signal_reasoning)rows+=`<div class="irow"><div class="ikey">Why</div><div class="ival">${sumData.signal_reasoning}</div></div>`;const p=document.getElementById('spanel');p.style.display='block';p.innerHTML=`<div class="shd"><div class="stitle"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Interview complete</div><div class="sacts"><button class="xbtn" onclick="copyR()">Copy results</button><button class="xbtn p" onclick="newI()">New interview</button></div></div><div class="sbody"><div class="sigb ${sc}"><div class="sigb-dot"></div>${sl}</div>${rows}</div>`;return true;}
-function copyR(){if(!sumData)return;navigator.clipboard.writeText('=== COWORK DENTAL INTERVIEW ===\n\n'+Object.entries(sumData).map(([k,v])=>`${k}: ${v}`).join('\n')).catch(()=>{});const b=document.querySelector('.xbtn');if(b){b.textContent='Copied!';setTimeout(()=>b.textContent='Copy results',2000);}}
-function newI(){H=[];topics=0;sumData=null;document.getElementById('messages').innerHTML='';document.getElementById('spanel').style.display='none';document.getElementById('izone').style.display='flex';setProg(0,'Getting started');startI();}
-async function startI(){busy=true;document.getElementById('sbtn').disabled=true;showT();try{const o=await callC([{role:'user',content:'[Begin the interview]'}]);hideT();H.push({role:'assistant',content:o});addMsg('assistant',o);setProg(5,'Interview started');document.getElementById('sbtn').disabled=false;document.getElementById('user-input').focus();}catch(e){hideT();const fb="Hi there! Thanks for taking a few minutes. I'm researching how dental practices handle patient recall and day-to-day admin. To start — how many providers do you have and roughly how long have you been open?";addMsg('assistant',fb);H.push({role:'assistant',content:fb});document.getElementById('sbtn').disabled=false;}busy=false;}
-async function send(){const inp=document.getElementById('user-input');const txt=inp?.value.trim();if(!txt||busy)return;inp.value='';inp.style.height='auto';busy=true;document.getElementById('sbtn').disabled=true;addMsg('user',txt);H.push({role:'user',content:txt});topics=Math.min(6,topics+(scoreT(txt)>0?1:0));const pct=Math.min(90,(topics/6)*90);const lbls=['Getting started','Practice basics','Patient recall','Admin workflow','Tools & software','Willingness to pay','Wrapping up'];setProg(pct,lbls[Math.min(topics,6)]);showT();try{const rep=await callC(H);hideT();if(!showSum(rep)){const cl=rep.replace('INTERVIEW_COMPLETE','').trim();addMsg('assistant',cl);H.push({role:'assistant',content:rep});topics=Math.min(6,topics+(scoreT(cl)>0?1:0));setProg(Math.min(90,(topics/6)*90),lbls[Math.min(topics,6)]);}}catch(e){hideT();addMsg('assistant',"Sorry, connection issue — could you repeat that?");}busy=false;document.getElementById('sbtn').disabled=false;document.getElementById('user-input')?.focus();}
+
+function scoreT(t){
+  const s=t.toLowerCase();let n=0;
+  if(/dentrix|eaglesoft|open dental|pms|software/.test(s))n++;
+  if(/lapsed|recall|reactivat|overdue/.test(s))n++;
+  if(/admin|hours|staff|front desk|billing/.test(s))n++;
+  if(/tool|weave|nexhealth|paying/.test(s))n++;
+  if(/pay|budget|price|decision/.test(s))n++;
+  if(/headache|biggest|frustrat|problem/.test(s))n++;
+  return n;
+}
+
+async function callC(msgs){
+  const r=await fetch(PROXY,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1024,system:SYS,messages:msgs})
+  });
+  if(!r.ok)throw new Error('API '+r.status);
+  const d=await r.json();
+  return d.content?.[0]?.text||'';
+}
+
+function handleComplete(raw){
+  const mi=raw.indexOf('INTERVIEW_COMPLETE');
+  if(mi===-1)return false;
+  const js=raw.indexOf('{',mi),je=raw.lastIndexOf('}');
+  if(js===-1||je===-1)return false;
+
+  let results='unknown';
+  try{results=JSON.parse(raw.substring(js,je+1));}catch(e){}
+
+  document.getElementById('izone').style.display='none';
+  document.getElementById('messages').style.display='none';
+  document.getElementById('thankyou').style.display='block';
+  setProg(100,'Complete');
+
+  fetch(PROXY,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      model:'claude-sonnet-4-20250514',
+      max_tokens:100,
+      messages:[{role:'user',content:'Respond with just "ok"'}],
+      _notify:'team@prooftrust.app',
+      _results:results
+    })
+  }).catch(()=>{});
+
+  return true;
+}
+
+async function startI(){
+  busy=true;
+  document.getElementById('sbtn').disabled=true;
+  showT();
+  try{
+    const o=await callC([{role:'user',content:'[Begin the interview]'}]);
+    hideT();
+    H.push({role:'assistant',content:o});
+    addMsg('assistant',o);
+    setProg(5,'Interview started');
+    document.getElementById('sbtn').disabled=false;
+    document.getElementById('user-input').focus();
+  }catch(e){
+    hideT();
+    const fb="Hi there! Thanks for taking a few minutes. I'm researching how dental practices handle patient recall and day-to-day admin. To start — how many providers do you have and roughly how long have you been open?";
+    addMsg('assistant',fb);
+    H.push({role:'assistant',content:fb});
+    document.getElementById('sbtn').disabled=false;
+  }
+  busy=false;
+}
+
+async function send(){
+  const inp=document.getElementById('user-input');
+  const txt=inp?.value.trim();
+  if(!txt||busy)return;
+  inp.value='';inp.style.height='auto';
+  busy=true;
+  document.getElementById('sbtn').disabled=true;
+  addMsg('user',txt);
+  H.push({role:'user',content:txt});
+  topics=Math.min(6,topics+(scoreT(txt)>0?1:0));
+  const pct=Math.min(90,(topics/6)*90);
+  const lbls=['Getting started','Practice basics','Patient recall','Admin workflow','Tools & software','Willingness to pay','Wrapping up'];
+  setProg(pct,lbls[Math.min(topics,6)]);
+  showT();
+  try{
+    const rep=await callC(H);
+    hideT();
+    if(!handleComplete(rep)){
+      const cl=rep.replace('INTERVIEW_COMPLETE','').trim();
+      addMsg('assistant',cl);
+      H.push({role:'assistant',content:rep});
+      topics=Math.min(6,topics+(scoreT(cl)>0?1:0));
+      setProg(Math.min(90,(topics/6)*90),lbls[Math.min(topics,6)]);
+    }
+  }catch(e){
+    hideT();
+    addMsg('assistant',"Sorry, connection issue — could you repeat that?");
+  }
+  busy=false;
+  document.getElementById('sbtn').disabled=false;
+  document.getElementById('user-input')?.focus();
+}
+
 startI();
 </script>
 </body>
