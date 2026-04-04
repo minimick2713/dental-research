@@ -65,11 +65,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 .sbtn:active{transform:scale(.95)}
 .sbtn:disabled{background:var(--ink-faint);cursor:not-allowed}
 .sbtn svg{width:16px;height:16px;fill:none;stroke:white;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.thankyou{display:none;padding:2.5rem 2rem;text-align:center}
-.ty-icon{width:56px;height:56px;background:var(--sage-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem}
-.ty-icon svg{width:26px;height:26px;fill:none;stroke:var(--sage);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.ty-title{font-family:'DM Serif Display',serif;font-size:24px;color:var(--ink);letter-spacing:-0.02em;margin-bottom:.75rem}
-.ty-sub{font-size:14px;color:var(--ink-mid);line-height:1.7;max-width:380px;margin:0 auto;font-weight:300}
+.thankyou{display:none;padding:3rem 2rem;text-align:center}
+.ty-icon{width:60px;height:60px;background:var(--sage-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem}
+.ty-icon svg{width:28px;height:28px;fill:none;stroke:var(--sage);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ty-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--ink);letter-spacing:-0.02em;margin-bottom:.85rem}
+.ty-sub{font-size:14px;color:var(--ink-mid);line-height:1.75;max-width:400px;margin:0 auto;font-weight:300}
 footer{text-align:center;padding:1.25rem;font-size:11px;color:var(--ink-light);border-top:1px solid var(--ink-faint)}
 footer a{color:var(--sage);text-decoration:none}
 @media(max-width:520px){.hero{padding:1.5rem 1rem 1.25rem}.topbar{padding:0 1rem}.main{padding:1rem .75rem}.hero-meta{gap:.75rem}}
@@ -110,13 +110,14 @@ footer a{color:var(--sage);text-decoration:none}
     <div class="thankyou" id="thankyou">
       <div class="ty-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
       <div class="ty-title">Thank you so much.</div>
-      <p class="ty-sub">Your input is genuinely valuable and will directly shape what we build. We appreciate you taking the time — we'll be in touch if we have follow-up questions.</p>
+      <p class="ty-sub">Your input is genuinely valuable and will directly shape what we build. We appreciate you taking the time — we'll be in touch if we have any follow-up questions.</p>
     </div>
   </div>
 </div>
-<footer>Built by Cowork &mdash; <a href="mailto:team@prooftrust.app">team@prooftrust.app</a></footer>
+<footer>Built by Cowork &mdash; <a href="mailto:kelly@prooftrust.app">kelly@prooftrust.app</a></footer>
 <script>
 const PROXY='https://proof-backend-production.up.railway.app/api/proxy/claude';
+const SAVE='https://proof-backend-production.up.railway.app/api/survey/complete';
 const SYS=`You are conducting a discovery interview for Cowork, researching whether dental practices have painful enough problems with lapsed patients and admin overhead to pay for an AI automation solution. Warm, curious, not salesy. Cover these 6 topics naturally before ending:
 1. Practice basics (size, PMS software, years open)
 2. Lapsed patient problem (how many, what they do, pain level)
@@ -184,32 +185,28 @@ async function callC(msgs){
   return d.content?.[0]?.text||'';
 }
 
+async function saveResults(results){
+  try{
+    await fetch(SAVE,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(results)
+    });
+  }catch(e){console.log('save failed',e);}
+}
+
 function handleComplete(raw){
   const mi=raw.indexOf('INTERVIEW_COMPLETE');
   if(mi===-1)return false;
   const js=raw.indexOf('{',mi),je=raw.lastIndexOf('}');
   if(js===-1||je===-1)return false;
-
-  let results='unknown';
+  let results={};
   try{results=JSON.parse(raw.substring(js,je+1));}catch(e){}
-
+  saveResults(results);
   document.getElementById('izone').style.display='none';
   document.getElementById('messages').style.display='none';
   document.getElementById('thankyou').style.display='block';
   setProg(100,'Complete');
-
-  fetch(PROXY,{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-      model:'claude-sonnet-4-20250514',
-      max_tokens:100,
-      messages:[{role:'user',content:'Respond with just "ok"'}],
-      _notify:'team@prooftrust.app',
-      _results:results
-    })
-  }).catch(()=>{});
-
   return true;
 }
 
